@@ -49,9 +49,9 @@ export default function TopSection() {
             </TooltipProvider>
             </CardTitle>
             </CardHeader>
-            <CardContent className="pb-1"> {/* Reduced padding to match second card */}
+            <CardContent className="pb-0"> {/* Reduced padding to match second card */}
             <div className="flex items-center justify-between">
-                <div className="space-y-0.5"> {/* Added space between price and label */}
+                <div className=""> {/* Added space between price and label */}
                 <p className="text-2xl font-bold text-gray-900 leading-none">$1,322.13</p>
                 <p className="text-sm mt-1 text-gray-600 leading-none">Current Value</p>
                 </div>
@@ -64,7 +64,7 @@ export default function TopSection() {
 
         {/* MV Estimate Range Card - Keep as is since it's the correct height */}
         <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
-            <CardHeader className="pb-1 pt-1">
+            <CardHeader className="pb-0 pt-0">
                 <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800">
                     MVestimate Range
                     <TooltipProvider>
@@ -85,7 +85,7 @@ export default function TopSection() {
                     </TooltipProvider>
                 </CardTitle>
             </CardHeader>
-            <CardContent className="pb-1.5">
+            <CardContent className="pb-3">
             <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600 leading-none">Range</span>
@@ -105,8 +105,8 @@ export default function TopSection() {
         {/* Right Half - My Leases Section */}
         <div className="flex flex-col">
         <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
-            <CardHeader className="pb-0 pt-1"> {/* Reduced padding */}
-            <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800 leading-none">
+            <CardHeader className="pb-0 pt-0"> {/* Reduced padding */}
+            <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800 leading-none mb-0">
                 My Leases
                 <TooltipProvider>
                 <Tooltip>
@@ -128,9 +128,9 @@ export default function TopSection() {
                 </TooltipProvider>
             </CardTitle>
             </CardHeader>
-            <CardContent className="px-0 px-2 space-y-0.5 pb-0"> {/* Added minimal top padding */}              
+            <CardContent className="pt-0 px-2 pb-0"> {/* Added minimal top padding */}              
             <div
-                className="overflow-y-auto max-h-53 px-2 py-1 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full"
+                className="overflow-y-auto max-h-53 px-2 pt-0 pb-0 py-0 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full"
             >
             {/* Lease Item 1 */}
             <div className="flex items-center gap-3 p-0 bg-gray-50 rounded-lg">
@@ -316,7 +316,7 @@ export default function TopSection() {
       </div>
 
       {/* Get started with Mineral View Section */}
-      <div className="mt-4 max-w-7xl mx-auto">
+      <div className="mt-4">
         <div className="bg-teal-500 rounded-lg py-5 px-4">
             <h2 className="text-white text-2xl font-bold text-center mb-4">Get started with Mineral View</h2>
 

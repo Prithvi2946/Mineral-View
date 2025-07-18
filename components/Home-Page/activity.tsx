@@ -55,7 +55,7 @@ export default function Activity() {
                     <div className="overflow-y-auto max-h-[calc(100vh-1px)] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full pr-0.5">
                         {/* Activity Card 1 */}
                         <Card className="mb-4 shadow-sm hover:shadow-md transition-shadow bg-white">
-                            <CardContent className="p-4">
+                            <CardContent className="px-4">
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="font-semibold text-gray-900 text-base">
                                         Well Permit: {"UNIVERSITY 40' #'1104WB' - 'SEM OPERATING COMPANY LLC'"}
@@ -334,7 +334,7 @@ export default function Activity() {
 
                     {/* Financials Card */}
                     <Card className="bg-white shadow-lg border-0">
-                        <CardContent className="pt-0.5 px-4">
+                        <CardContent className="pt-0 px-3">
                             {/* Tabs Section */}
                             <div className="flex flex-col">
                                 <div className="flex flex-wrap gap-2 mb-2">
