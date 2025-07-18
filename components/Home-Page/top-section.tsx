@@ -135,7 +135,7 @@ export default function TopSection() {
             {/* Lease Item 1 */}
             <div className="flex items-center gap-3 p-0 bg-gray-50 rounded-lg">
                 {/* Left section - Lease info */}
-                <div className="flex-1">
+                <div className="w-[190px]">
                     <p className="font-semibold text-gray-900 text-sm leading-tight">BASS, M. F. -A- W#8 (04361)</p>
                     <p className="text-xs font-bold mt-1 text-black leading-tight">$1296.12</p>
                 </div>
@@ -150,7 +150,7 @@ export default function TopSection() {
                 </div>
 
                  {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
+                <div className="w-px h-8 bg-gray-300 mr-5"></div>
 
                 {/* Right section - Buttons */}
                 <div className="flex flex-col gap-0.5 min-w-[90px]">
@@ -181,7 +181,7 @@ export default function TopSection() {
               {/* Lease Item 2 */}
               <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
                 {/* Left section - Lease info */}
-                <div className="flex-1 min-w-[180px]">
+                <div className="w-[190px]">
                     <p className="font-semibold text-gray-900 text-sm leading-tight">JOHNSON A W (09948)</p>
                     <p className="text-xs font-bold mt-1 text-black leading-tight">$11.69</p>
                 </div>
@@ -197,7 +197,7 @@ export default function TopSection() {
                 </div>
 
                 {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
+                <div className="w-px h-8 bg-gray-300 mr-5"></div>
 
                 {/* Right section - Buttons */}
                 <div className="flex flex-col gap-0.5 min-w-[90px]">
@@ -228,7 +228,7 @@ export default function TopSection() {
               {/* Lease Item 3 */}
               <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
                 {/* Left section - Lease info */}
-                <div className="flex-1 min-w-[180px]">
+                <div className="w-[190px]">
                     <p className="font-semibold text-gray-900 text-sm leading-tight">JOHNSON C (00865)</p>
                     <p className="text-xs font-bold mt-1 text-black leading-tight">$9.12</p>
                 </div>
@@ -244,7 +244,7 @@ export default function TopSection() {
                 </div>
 
                 {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
+                <div className="w-px h-8 bg-gray-300 mr-5"></div>
 
                 {/* Right section - Buttons */}
                 <div className="flex flex-col gap-0.5 min-w-[90px]">
@@ -274,7 +274,7 @@ export default function TopSection() {
 
               {/* Lease Item 4 */}
               <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                <div className="flex-1 min-w-[180px]">
+                <div className="w-[190px]">
                     <p className="font-semibold text-gray-900 text-sm leading-tight">CKODRE A (10267)</p>
                     <p className="text-xs font-bold mt-1 text-black leading-tight">$4.87</p>
                 </div>
@@ -283,7 +283,7 @@ export default function TopSection() {
                 <p className="font-bold text-emerald-600 text-sm leading-tight">$411.56</p>
                 <p className="text-xs mt-1 font-semibold text-emerald-600 leading-tight">(100.00%)</p>
             </div>
-            <div className="w-px h-8 bg-gray-300"></div>
+            <div className="w-px h-8 bg-gray-300 mr-5"></div>
                 <div className="flex flex-col gap-0.5 min-w-[90px]">
                     <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>
                     <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Lease-Report</Button>
@@ -293,7 +293,7 @@ export default function TopSection() {
 
               {/* Lease Item 5 (dummy) */}
               <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                <div className="flex-1 min-w-[180px]">
+                <div className="w-[190px]">
                     <p className="font-semibold text-gray-900 text-sm leading-tight">DOE LEASE (67890)</p>
                     <p className="text-xs font-bold mt-1 text-black leading-tight">$987.65</p>
                 </div>
@@ -302,7 +302,7 @@ export default function TopSection() {
                 <p className="font-bold text-emerald-600 text-sm leading-tight">$8,765.43</p>
                 <p className="text-xs mt-1 font-semibold text-red-500 leading-tight">(-2.10%)</p>
             </div>
-            <div className="w-px h-8 bg-gray-300"></div>
+            <div className="w-px h-8 bg-gray-300 mr-5"></div>
                 <div className="flex flex-col gap-0.5 min-w-[90px]">
                     <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>
                     <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Lease-Report</Button>
