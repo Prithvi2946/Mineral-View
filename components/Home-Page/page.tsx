@@ -1,6 +1,7 @@
 import React from 'react';
 import TopSection from './top-section';
 import Activity from './activity';
+import Feedback from './feedback';
 
 export default function HomePage() {
     return (
@@ -10,6 +11,9 @@ export default function HomePage() {
           }} className='mt-14 w-full'>    
             <TopSection />
             <Activity />
+            
+            {/* Feedback Button and Dialogs */}
+            <Feedback />
         </div>  
     )
 }

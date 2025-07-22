@@ -431,6 +431,12 @@ export default function Activity() {
                     </Card>
                 </div>
             </div>
+
+            {/* Feedback Button */}
+            {/* <Button className="fixed bottom-4 right-6 bg-[#00cd95] hover:bg-emerald-600 text-white text-md py-3 px-4 rounded-md shadow-lg flex items-center gap-4">
+                Feedback <ArrowUp className="w-5 h-5" />
+            </Button> */}
+      
         </div>
       
     )
