@@ -116,7 +116,7 @@ function WriteFeedbackDialog({ isOpen, onOpenChange }: WriteFeedbackDialogProps)
                         ? "bg-[#00cd95] text-white"
                         : "bg-[#f0f0f0] text-gray-800 hover:bg-gray-200"
                     }`}
-                    onClick={() => setFeedbackType(type as any)}
+                    onClick={() => setFeedbackType(type as "suggestion" | "bug" | "other")}
                     >
                     {type.charAt(0).toUpperCase() + type.slice(1)}
                     </Button>
