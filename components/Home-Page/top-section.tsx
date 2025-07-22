@@ -18,7 +18,29 @@ import {
     TooltipTrigger,
   } from "@/components/ui/tooltip"
 
+import { useEffect, useState } from "react";
+import { getMvestimateDashboard, MvestimateDashboard } from "@/services/services";
+import { getOnWatchlist, LeaseItem } from "@/services/services";
+
 export default function TopSection() {
+  const [mvData, setMvData] = useState<MvestimateDashboard | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const [leases, setLeases] = useState<LeaseItem[]>([]);
+  const [leasesLoading, setLeasesLoading] = useState(true);
+
+  useEffect(() => {
+    getMvestimateDashboard("1271")
+      .then((data) => setMvData(data))
+      .finally(() => setLoading(false));
+  }, []);
+  
+  useEffect(() => {
+    getOnWatchlist("1271")
+      .then((data) => setLeases(data))
+      .finally(() => setLeasesLoading(false));
+  }, []);
+  
   return (
     <div
       className="p-4"
@@ -26,11 +48,11 @@ export default function TopSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4.5">
         {/* Left Half - MV Estimate Cards */}
         <div className="flex flex-col gap-3">
-        {/* MVestimate Card */}
-        <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
+          {/* MVestimate Card */}
+          <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
             <CardHeader className="pt-0">
-            <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800">
-            MVestimate
+              <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800">
+                MVestimate
             <TooltipProvider>
                 <Tooltip>
                 <TooltipTrigger asChild>
@@ -49,24 +71,26 @@ export default function TopSection() {
             </TooltipProvider>
             </CardTitle>
             </CardHeader>
-            <CardContent className="pb-0"> {/* Reduced padding to match second card */}
-            <div className="flex items-center justify-between">
-                <div className=""> {/* Added space between price and label */}
-                <p className="text-2xl font-bold text-gray-900 leading-none">$1,322.13</p>
-                <p className="text-sm mt-1 text-gray-600 leading-none">Current Value</p>
+            <CardContent className="pb-0">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-2xl font-bold text-gray-900 leading-none">
+                    {loading || !mvData ? "--" : `$${Number(mvData.avg_mvestimate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                  </p>
+                  <p className="text-sm mt-1 text-gray-600 leading-none">Current Value</p>
                 </div>
                 <Badge variant="secondary" className="bg-green-100 font-bold text-green-800 border-green-200">
-                +7.35%
+                  {loading || !mvData ? "--" : `${mvData.change}%`}
                 </Badge>
-            </div>
+              </div>
             </CardContent>
-        </Card>
+          </Card>
 
-        {/* MV Estimate Range Card - Keep as is since it's the correct height */}
+        {/* MV Estimate Range Card */}
         <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
             <CardHeader className="pb-0 pt-0">
-                <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800">
-                    MVestimate Range
+              <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800">
+                MVestimate Range
                     <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -83,23 +107,36 @@ export default function TopSection() {
                         </TooltipContent>
                     </Tooltip>
                     </TooltipProvider>
-                </CardTitle>
+                    </CardTitle>
             </CardHeader>
             <CardContent className="pb-3">
-            <div className="space-y-1.5">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600 leading-none">Range</span>
-                <span className="font-bold text-lg text-gray-900 leading-none">$1,189.91 - $1,454.34</span>
+                  <span className="text-sm text-gray-600 leading-none">Range</span>
+                  <span className="font-bold text-lg text-gray-900 leading-none">
+                    {loading || !mvData
+                      ? "--"
+                      : `$${Number(mvData.min_mvestimate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} - $${Number(mvData.max_mvestimate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                  </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-1.5">
-                <div
+                  <div
                     className="bg-gradient-to-r from-blue-400 to-emerald-400 h-1.5 rounded-full"
-                    style={{ width: "65%" }}
-                ></div>
+                    style={{
+                      width:
+                        loading || !mvData
+                          ? "0%"
+                          : `${Math.round(
+                              ((Number(mvData.avg_mvestimate) - Number(mvData.min_mvestimate)) /
+                                (Number(mvData.max_mvestimate) - Number(mvData.min_mvestimate))) *
+                                100
+                            )}%`,
+                    }}
+                  ></div>
                 </div>
-            </div>
+              </div>
             </CardContent>
-        </Card>
+          </Card>
         </div>
 
         {/* Right Half - My Leases Section */}
@@ -128,188 +165,55 @@ export default function TopSection() {
                 </TooltipProvider>
             </CardTitle>
             </CardHeader>
-            <CardContent className="pt-0 px-2 pb-0"> {/* Added minimal top padding */}              
-            <div
-                className="overflow-y-auto max-h-53 px-2 pt-0 pb-0 py-0 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full"
-            >
-            {/* Lease Item 1 */}
-            <div className="flex items-center gap-3 p-0 bg-gray-50 rounded-lg">
-                {/* Left section - Lease info */}
-                <div className="w-[190px]">
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">BASS, M. F. -A- W#8 (04361)</p>
-                    <p className="text-xs font-bold mt-1 text-black leading-tight">$1296.12</p>
+            <CardContent className="pt-0 px-2 pb-0">
+                <div className="overflow-y-auto max-h-53 px-2 pt-0 pb-0 py-0 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full">
+                    {leasesLoading ? (
+                    <div className="text-center text-gray-400 py-4">Loading...</div>
+                    ) : leases.length === 0 ? (
+                    <div className="text-center text-gray-400 py-4">No leases found.</div>
+                    ) : (
+                    leases.map((lease) => (
+                        <div key={lease.lease_number} className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg mb-2">
+                        {/* Left section - Lease info */}
+                        <div className="w-[190px]">
+                            <p className="font-semibold text-gray-900 text-sm leading-tight">
+                                {lease.lease_name} ({lease.lease_number})
+                            </p>
+                            <p className="text-sm font-bold text-black mt-2">
+                                {lease.mvestimate && !isNaN(Number(lease.mvestimate))
+                                ? `$${Number(lease.mvestimate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                                : ""}
+                            </p>
+                        </div>
+                        {/* Vertical divider */}
+                        <div className="w-px h-8 bg-gray-300"></div>
+                        {/* Center section - LeaseMVestimate1 and percentage */}
+                        <div className="text-center w-[120px] space-y-0.5">
+                            <p className="font-bold text-emerald-600 text-sm leading-tight">
+                            {lease.LeaseMVestimate1 && !isNaN(Number(lease.LeaseMVestimate1.replace(/,/g, "")))
+                                ? `$${Number(lease.LeaseMVestimate1.replace(/,/g, "")).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                                : "--"}
+                            </p>
+                            <p className={`text-xs mt-1 font-semibold ${
+                            lease.m_percentage && Number(lease.m_percentage) >= 0 ? "text-emerald-600" : "text-red-500"
+                            } leading-tight`}>
+                            {lease.m_percentage && !isNaN(Number(lease.m_percentage))
+                                ? `(${Number(lease.m_percentage).toFixed(2)}%)`
+                                : "--"}
+                            </p>
+                        </div>
+                        {/* Vertical divider */}
+                        <div className="w-px h-8 bg-gray-300 mr-5"></div>
+                        {/* Right section - Buttons */}
+                        <div className="flex flex-col gap-0.5 min-w-[90px]">
+                            <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>
+                            <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Lease-Report</Button>
+                            <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Details</Button>
+                        </div>
+                        </div>
+                    ))
+                    )}
                 </div>
-
-                {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
-
-                {/* Center section - Amount and percentage with conditional color */}
-                <div className="text-center w-[120px] space-y-0.5">
-                <p className="font-bold text-emerald-600 text-sm leading-tight">$109,487.99</p>
-                <p className="text-xs mt-1 font-semibold text-red-500 leading-tight">(-4.40%)</p>
-                </div>
-
-                 {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300 mr-5"></div>
-
-                {/* Right section - Buttons */}
-                <div className="flex flex-col gap-0.5 min-w-[90px]">
-                <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                >
-                    Map
-                </Button>
-                <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                >
-                    Lease-Report
-                </Button>
-                <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                >
-                    Details
-                </Button>
-                </div>
-              </div>
-
-              {/* Lease Item 2 */}
-              <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                {/* Left section - Lease info */}
-                <div className="w-[190px]">
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">JOHNSON A W (09948)</p>
-                    <p className="text-xs font-bold mt-1 text-black leading-tight">$11.69</p>
-                </div>
-
-                {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
-
-                {/* Center section - Amount and percentage */}
-                {/* For positive percentages */}
-                <div className="text-center w-[120px] space-y-0.5">
-                <p className="font-bold text-emerald-600 text-sm leading-tight">$559.76</p>
-                <p className="text-xs mt-1 font-semibold text-emerald-600 leading-tight">(100.00%)</p>
-                </div>
-
-                {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300 mr-5"></div>
-
-                {/* Right section - Buttons */}
-                <div className="flex flex-col gap-0.5 min-w-[90px]">
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Map
-                    </Button>
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Lease-Report
-                    </Button>
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Details
-                    </Button>
-                </div>
-            </div>
-
-              {/* Lease Item 3 */}
-              <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                {/* Left section - Lease info */}
-                <div className="w-[190px]">
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">JOHNSON C (00865)</p>
-                    <p className="text-xs font-bold mt-1 text-black leading-tight">$9.12</p>
-                </div>
-
-                 {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300"></div>
-
-                {/* Center section - Amount and percentage */}
-                {/* For positive percentages */}
-                <div className="text-center w-[120px] space-y-0.5">
-                <p className="font-bold text-emerald-600 text-sm leading-tight">$77,985.39</p>
-                <p className="text-xs mt-1 font-semibold text-emerald-600 leading-tight">(16.31%)</p>
-                </div>
-
-                {/* Vertical divider */}
-                <div className="w-px h-8 bg-gray-300 mr-5"></div>
-
-                {/* Right section - Buttons */}
-                <div className="flex flex-col gap-0.5 min-w-[90px]">
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Map
-                    </Button>
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Lease-Report
-                    </Button>
-                    <Button 
-                        size="sm" 
-                        variant="outline" 
-                        className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700"
-                    >
-                        Details
-                    </Button>
-                 </div>
-              </div>
-
-              {/* Lease Item 4 */}
-              <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                <div className="w-[190px]">
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">CKODRE A (10267)</p>
-                    <p className="text-xs font-bold mt-1 text-black leading-tight">$4.87</p>
-                </div>
-            <div className="w-px h-8 bg-gray-300"></div>
-            <div className="text-center w-[120px] space-y-0.5">
-                <p className="font-bold text-emerald-600 text-sm leading-tight">$411.56</p>
-                <p className="text-xs mt-1 font-semibold text-emerald-600 leading-tight">(100.00%)</p>
-            </div>
-            <div className="w-px h-8 bg-gray-300 mr-5"></div>
-                <div className="flex flex-col gap-0.5 min-w-[90px]">
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Lease-Report</Button>
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Details</Button>
-                </div>
-              </div>
-
-              {/* Lease Item 5 (dummy) */}
-              <div className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg">
-                <div className="w-[190px]">
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">DOE LEASE (67890)</p>
-                    <p className="text-xs font-bold mt-1 text-black leading-tight">$987.65</p>
-                </div>
-            <div className="w-px h-8 bg-gray-300"></div>
-            <div className="text-center w-[120px] space-y-0.5">
-                <p className="font-bold text-emerald-600 text-sm leading-tight">$8,765.43</p>
-                <p className="text-xs mt-1 font-semibold text-red-500 leading-tight">(-2.10%)</p>
-            </div>
-            <div className="w-px h-8 bg-gray-300 mr-5"></div>
-                <div className="flex flex-col gap-0.5 min-w-[90px]">
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Lease-Report</Button>
-                    <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Details</Button>
-                </div>
-              </div>
-            </div>
             </CardContent>
           </Card>
         </div>
