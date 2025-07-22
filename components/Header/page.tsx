@@ -22,18 +22,7 @@ export default function Header() {
       .finally(() => setLoading(false));
   }, []);
 
-  const commodities = [
-    { name: "Natural Gas" },
-    { name: "Brent Oil" },
-    { name: "Crude Oil WTI" }
-  ].map((c) => {
-    const found = spotPrices.find(s => s.name === c.name);
-    return {
-      name: c.name,
-      price: found ? Number(found.value) : 0,
-      change: found ? Number(found.changepercentage) : 0,
-    };
-  });
+  const commodities = spotPrices; // spotPrices is already your API response array
 
   return (
     <header className="fixed top-0 right-0 h-14.5 bg-white border-b border-gray-300 w-[calc(100%-224px)] z-50">
@@ -47,10 +36,10 @@ export default function Header() {
               </span>
               <div className="flex items-center gap-2.5">
                 <span className="text-black text-[14px] font-bold">
-                  {loading ? "--" : `$${commodity.price.toFixed(2)}`}
+                  {loading ? "--" : `$${Number(commodity.value).toFixed(2)}`}
                 </span>
-                <span className={`text-[12.3px] font-bold ${commodity.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  {loading ? "--" : `${commodity.change.toFixed(2)}%`}
+                <span className={`text-[12.3px] font-bold ${Number(commodity.changepercentage) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {loading ? "--" : `${Number(commodity.changepercentage).toFixed(2)}%`}
                 </span>
               </div>
             </div>
