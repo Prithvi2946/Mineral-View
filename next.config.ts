@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
   },
 
   env: {
-    BASE_URL: "https://mview-portal.mineralview.com",
+    // BASE_URL: "https://mview-portal.mineralview.com",
+    NEXT_PUBLIC_BASE_URL: "https://mview-portal.mineralview.com"
   },
   
 };

@@ -9,47 +9,53 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-
-const commodityPrices = [
-  {
-    name: "Natural Gas",
-    price: 33.44,
-    change: 0.28,
-  },
-  {
-    name: "Brent Crude",
-    price: 69.06,
-    change: 0.12,
-  },
-  {
-    name: "WTI Crude",
-    price: 66.77,
-    change: 0.44,
-  }
-]
+import { useEffect, useState } from "react";
+import { getSpotPrices, SpotPrice } from "@/services/services";
 
 export default function Header() {
+  const [spotPrices, setSpotPrices] = useState<SpotPrice[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getSpotPrices()
+      .then((data) => setSpotPrices(data))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const commodities = [
+    { name: "Natural Gas" },
+    { name: "Brent Oil" },
+    { name: "Crude Oil WTI" }
+  ].map((c) => {
+    const found = spotPrices.find(s => s.name === c.name);
+    return {
+      name: c.name,
+      price: found ? Number(found.value) : 0,
+      change: found ? Number(found.changepercentage) : 0,
+    };
+  });
+
   return (
     <header className="fixed top-0 right-0 h-14.5 bg-white border-b border-gray-300 w-[calc(100%-224px)] z-50">
-    <div className="flex items-stretch h-full">
-      {/* Commodity Prices */}
-      <div className="hidden lg:flex items-stretch divide-x-2 divide-gray-200">
-        {commodityPrices.map((commodity) => (
-          <div key={commodity.name} className="flex flex-col justify-center px-6 first:pl-6 border-r-2 border-gray-300 h-full">
-            <span className="text-gray-500 text-[14px] font-bold tracking-wide">
-              {commodity.name}
-            </span>
-            <div className="flex items-center gap-1.5">
-              <span className="text-black text-[14px] font-bold">
-                ${commodity.price.toFixed(2)}
+      <div className="flex items-stretch h-full">
+        {/* Commodity Prices */}
+        <div className="hidden lg:flex items-stretch divide-x-2 divide-gray-200">
+          {commodities.map((commodity) => (
+            <div key={commodity.name} className="flex flex-col justify-center px-6 first:pl-6 border-r-2 border-gray-300 h-full">
+              <span className="text-gray-500 text-[14px] font-bold tracking-wide">
+                {commodity.name}
               </span>
-              <span className={`text-[12.3px] font-bold ${commodity.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                {commodity.change.toFixed(2)}%
-              </span>
+              <div className="flex items-center gap-2.5">
+                <span className="text-black text-[14px] font-bold">
+                  {loading ? "--" : `$${commodity.price.toFixed(2)}`}
+                </span>
+                <span className={`text-[12.3px] font-bold ${commodity.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {loading ? "--" : `${commodity.change.toFixed(2)}%`}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
         {/* Right Side Icons */}
         <TooltipProvider>
