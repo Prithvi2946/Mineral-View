@@ -140,11 +140,11 @@ export default function TopSection() {
         </div>
 
         {/* Right Half - My Leases Section */}
-        <div className="flex flex-col">
-        <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
-            <CardHeader className="pb-0 pt-0"> {/* Reduced padding */}
+        <div className="flex flex-col h-full">
+        <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0 h-full min-h-[287px] flex flex-col justify-between">
+          <CardHeader className="pb-0 pt-[-0.5px]">
             <CardTitle className="flex items-center gap-2 text-lg font-bold text-gray-800 leading-none mb-0">
-                My Leases
+              My Leases
                 <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -165,15 +165,15 @@ export default function TopSection() {
                 </TooltipProvider>
             </CardTitle>
             </CardHeader>
-            <CardContent className="pt-0 px-2 pb-0">
-                <div className="overflow-y-auto max-h-53 px-2 pt-0 pb-0 py-0 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full">
-                    {leasesLoading ? (
-                    <div className="text-center text-gray-400 py-4">Loading...</div>
-                    ) : leases.length === 0 ? (
-                    <div className="text-center text-gray-400 py-4">No leases found.</div>
-                    ) : (
-                    leases.map((lease) => (
-                        <div key={lease.lease_number} className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg mb-2">
+            <CardContent className="pt-[-2px] px-2 pb-0 flex-1 flex flex-col">
+              <div className="overflow-y-auto max-h-53 px-2 pt-[-2px] pb-0 py-0 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full h-full">
+                {leasesLoading ? (
+                  <div className="flex items-center justify-center h-full text-center text-gray-400 py-4">Loading...</div>
+                ) : leases.length === 0 ? (
+                  <div className="flex items-center justify-center h-full text-center text-gray-400 py-4">No leases found.</div>
+                ) : (
+                  leases.map((lease) => (
+                        <div key={lease.lease_number} className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg mb-[-1px]">
                         {/* Left section - Lease info */}
                         <div className="w-[190px]">
                             <p className="font-semibold text-gray-900 text-sm leading-tight">
@@ -186,7 +186,7 @@ export default function TopSection() {
                             </p>
                         </div>
                         {/* Vertical divider */}
-                        <div className="w-px h-8 bg-gray-300"></div>
+                        <div className="w-px h-8 bg-gray-300 ml-5"></div>
                         {/* Center section - LeaseMVestimate1 and percentage */}
                         <div className="text-center w-[120px] space-y-0.5">
                             <p className="font-bold text-emerald-600 text-sm leading-tight">
@@ -203,7 +203,7 @@ export default function TopSection() {
                             </p>
                         </div>
                         {/* Vertical divider */}
-                        <div className="w-px h-8 bg-gray-300 mr-5"></div>
+                        <div className="w-px h-8 bg-gray-300 mr-3"></div>
                         {/* Right section - Buttons */}
                         <div className="flex flex-col gap-0.5 min-w-[90px]">
                             <Button size="sm" variant="outline" className="text-xs px-2 py-0.5 h-5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700">Map</Button>

@@ -248,30 +248,29 @@ export default function Activity() {
                     <h2 className="text-xl font-bold text-black mt-3 mb-1">Sponsored</h2>{" "}
                     {/* Adjusted margin-top and margin-bottom */}
                     <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-0">
-                        {" "}
-                        {/* Added mb-6 for bottom space */}
                         <CardContent className="pt-0 px-4 pb-0 flex flex-col justify-center items-center">
-                        {" "}
-                        {/* Added padding to CardContent */}
-                        <Image
-                            src="https://res.cloudinary.com/mineralview/image/upload/Images/bold-Branding.webp"
-                            alt="BOLD Precious Metals"
-                            width={450}
-                            height={300}
-                            className="object-cover mb-4"
-                            unoptimized
-                            priority
-                        />
-                        <div>
-                            <h3 className="font-bold text-[#00cd95] text-base mb-1">BOLD Precious Metals</h3>{" "}
-                            {/* Changed text color to blue */}
-                            <p className="text-sm text-gray-700 leading-snug">
-                            {" "}
-                            {/* Added leading-snug for line height */}
-                            Bullion Dealer | Buy Silver, Gold, Platinum & Palladium | Always the lowest prices! Fast & secure
-                            shipping
-                            </p>
-                        </div>
+                            <a
+                                href="https://www.boldpreciousmetals.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full flex flex-col items-center no-underline hover:opacity-90"
+                            >
+                                <Image
+                                    src="https://res.cloudinary.com/mineralview/image/upload/Images/bold-Branding.webp"
+                                    alt="BOLD Precious Metals"
+                                    width={450}
+                                    height={300}
+                                    className="object-cover mb-4"
+                                    unoptimized
+                                    priority
+                                />
+                                <div>
+                                    <h3 className="font-bold text-[#00cd95] text-base mb-1">BOLD Precious Metals</h3>
+                                    <p className="text-sm text-gray-700 leading-snug">
+                                        Bullion Dealer | Buy Silver, Gold, Platinum & Palladium | Always the lowest prices! Fast & secure shipping
+                                    </p>
+                                </div>
+                            </a>
                         </CardContent>
                     </Card>
                 </div>
