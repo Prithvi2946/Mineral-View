@@ -52,6 +52,29 @@ export interface MvestimateDashboard {
     mvestimate_change_percentage?: string; // If present in some responses
   }
 
+  export interface ActivityNewsItem {
+    _id: string;
+    Title: string;
+    Description: string;
+    Thumbnail: string | null;
+    Image: string | null;
+    PostedByEmail: string;
+    PostedByName: string;
+    Status: string;
+    CreateTS: string;
+    Attachments: {
+      attachment_type: string;
+      associtated_fields: string;
+      file_path: string;
+    }[];
+    Categoryname: string;
+    DetailedInformation: { key: string; value: string | null }[];
+    Likes: any[];
+    Comments: any[];
+    Views: any[];
+    link: string;
+  }
+
 export async function getSpotPrices(): Promise<SpotPrice[]> {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/myportfolio/getspotprices`
@@ -73,5 +96,13 @@ export async function getMvestimateDashboard(userId: string): Promise<Mvestimate
       `${process.env.NEXT_PUBLIC_BASE_URL}/MyPortfolio/get_onwatchlist/${userId}`
     );
     // API returns { data: [...] }
+    return response.data.data;
+  }
+
+  export async function getActivityNews(payload: any): Promise<ActivityNewsItem[]> {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/NewsFramework/newGetMyNews`,
+      payload
+    );
     return response.data.data;
   }
