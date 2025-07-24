@@ -106,3 +106,34 @@ export async function getMvestimateDashboard(userId: string): Promise<Mvestimate
     );
     return response.data.data;
   }
+
+  export async function getFinancialsData({
+    member_id,
+    duration_in_months,
+    lease_number,
+    district_code,
+    type,
+  }: {
+    member_id: number;
+    duration_in_months: number;
+    lease_number: string;
+    district_code: string;
+    type: string;
+  }) {
+    const res = await fetch(
+      'https://mview-portal.mineralview.com/MyPortfolio/get_single_lease_cash_flow2',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          member_id,
+          duration_in_months,
+          lease_number,
+          district_code,
+          type,
+        }),
+      }
+    );
+    if (!res.ok) throw new Error('Failed to fetch financials');
+    return res.json();
+  }
