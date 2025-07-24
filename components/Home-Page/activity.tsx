@@ -86,6 +86,22 @@ ChartJS.register(
     return MONTHS_ALL;
   }
 
+  type FinancialsResponseItem = {
+    cash_flow?: number;
+    future_cash_flow?: number;
+    oil_produced?: number;
+    oil_reserves?: number;
+    gas_produced?: number;
+    gas_reserves?: number;
+    // add more fields if needed
+  };
+  
+  type FinancialsData = {
+    lease_name?: string;
+    horizontalResponse: FinancialsResponseItem[];
+    // add more fields if needed
+  };
+
 export default function Activity() {
   const [activities, setActivities] = useState<ActivityNewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,7 +128,7 @@ export default function Activity() {
     const [financialTab, setFinancialTab] = useState<"cashflow" | "production">("cashflow");
     const [financialRange, setFinancialRange] = useState(0);
     const [financialsLoading, setFinancialsLoading] = useState(false);
-    const [financialsData, setFinancialsData] = useState<any>(null);
+    const [financialsData, setFinancialsData] = useState<{ data?: FinancialsData } | null>(null);
 
     const member_id = 1615;
     const lease_number = "43735";
@@ -156,8 +172,8 @@ export default function Activity() {
     const dataArr = financialsData.data.horizontalResponse;
 
     if (financialTab === "cashflow") {
-        const cashFlow = dataArr.map((item: any) => item.cash_flow ?? 0).slice(0, labels.length);
-        const futureCashFlow = dataArr.map((item: any) => item.future_cash_flow ?? 0).slice(0, labels.length);
+        const cashFlow = dataArr.map((item: FinancialsResponseItem) => item.cash_flow ?? 0).slice(0, labels.length);
+        const futureCashFlow = dataArr.map((item: FinancialsResponseItem) => item.future_cash_flow ?? 0).slice(0, labels.length);
 
         legendContent = (
             <div className="flex justify-center gap-6 mt-2 mb-2">
@@ -262,10 +278,10 @@ export default function Activity() {
         );
     } else {
         // Crude Oil & NAT Gas Production
-        const oilProduced = dataArr.map((item: any) => item.oil_produced ?? 0).slice(0, labels.length);
-        const oilReserves = dataArr.map((item: any) => item.oil_reserves ?? 0).slice(0, labels.length);
-        const gasProduced = dataArr.map((item: any) => item.gas_produced ?? 0).slice(0, labels.length);
-        const gasReserves = dataArr.map((item: any) => item.gas_reserves ?? 0).slice(0, labels.length);
+        const oilProduced = dataArr.map((item: FinancialsResponseItem) => item.oil_produced ?? 0).slice(0, labels.length);
+        const oilReserves = dataArr.map((item: FinancialsResponseItem) => item.oil_reserves ?? 0).slice(0, labels.length);
+        const gasProduced = dataArr.map((item: FinancialsResponseItem) => item.gas_produced ?? 0).slice(0, labels.length);
+        const gasReserves = dataArr.map((item: FinancialsResponseItem) => item.gas_reserves ?? 0).slice(0, labels.length);
 
         legendContent = (
             <div className="flex justify-center gap-6 mt-2 mb-2">
@@ -386,7 +402,7 @@ export default function Activity() {
                 y1: {
                     type: "linear",
                     position: "left",
-                    grid: { color: "#00cd95", borderDash: [2, 2] } as any,
+                    grid: { color: "#00cd95" },
                     ticks: {
                     color: "#00cd95",
                     callback: function (val) {
@@ -460,7 +476,7 @@ export default function Activity() {
                     </div>
 
                     {/* Activity Cards Container with Scrollable Area */}
-                    <div className="overflow-y-auto max-h-[calc(100vh-1px)] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full pr-0.5">
+                    <div className="overflow-y-auto max-h-[960px] mb-2 [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-[#00cd95] [&::-webkit-scrollbar-thumb]:rounded-full pr-0.5">
                         {loading ? (
                             <div className="text-center text-gray-400 py-4">Loading...</div>
                         ) : activities.length === 0 ? (
@@ -578,7 +594,7 @@ export default function Activity() {
                                 ? "text-[#00cd95] border-b-2 border-[#00cd95]"
                                 : "text-gray-600 hover:text-[#00cd95]"
                             }`}
-                            onClick={() => setFinancialTab(tab.value as any)}
+                            onClick={() => setFinancialTab(tab.value as "cashflow" | "production")}
                         >
                             {tab.label}
                         </Button>
