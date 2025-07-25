@@ -7,7 +7,7 @@ import {
   LayoutGrid, 
   MessageSquare, 
   Download,
-  Image as ImageIcon,
+  // Image as ImageIcon,
   UserRoundPlus,
   Circle
  } from "lucide-react"
