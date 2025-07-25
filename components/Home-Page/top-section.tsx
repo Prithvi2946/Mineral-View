@@ -224,7 +224,7 @@ export default function TopSection() {
         <div className="bg-teal-500 rounded-lg py-5 px-4">
             <h2 className="text-white text-2xl font-bold text-center mb-4">Get started with Mineral View</h2>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-10">
             {/* Add Lease Button */}
             <Button className="bg-orange-300 hover:bg-orange-400 text-black font-semibold py-3 px-4 rounded-lg flex items-center gap-3 h-16 min-w-[160px] transition-all duration-200">
                 <div className="transform scale-150">
@@ -258,12 +258,12 @@ export default function TopSection() {
             </Button>
 
             {/* Add Photos Button */}
-            <Button className="bg-orange-300 hover:bg-orange-400 text-black font-semibold py-3 px-4 rounded-lg flex items-center gap-3 h-16 min-w-[160px] transition-all duration-200">
+            {/* <Button className="bg-orange-300 hover:bg-orange-400 text-black font-semibold py-3 px-4 rounded-lg flex items-center gap-3 h-16 min-w-[160px] transition-all duration-200">
                 <div className="transform scale-150">
                     <ImageIcon className="w-10 h-10 text-black" />
                 </div>
                 <span className="text-base font-bold leading-tight">Add Photos</span>
-            </Button>
+            </Button> */}
             </div>
         </div>
       </div>
