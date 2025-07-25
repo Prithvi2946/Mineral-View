@@ -175,7 +175,7 @@ export default function TopSection() {
                   leases.map((lease) => (
                         <div key={lease.lease_number} className="flex items-center gap-3 p-1 bg-gray-50 rounded-lg mb-[-1px]">
                         {/* Left section - Lease info */}
-                        <div className="w-[190px]">
+                        <div className="w-[200px]">
                             <p className="font-semibold text-gray-900 text-sm leading-tight">
                                 {lease.lease_name} ({lease.lease_number})
                             </p>
